@@ -58,6 +58,7 @@ public class Part3
             startIndex = dna.indexOf(gene, startIndex) + gene.length();
         }
         if(geneCount == 0) System.out.println("None!");
+        System.out.println("Total genes: " + geneCount);
         return geneList;
     }
     
@@ -76,6 +77,17 @@ public class Part3
         // To prevent division by zero
         if (dna.length() > 0) ratio = (double) totalCount / dna.length();
         return ratio;
+    }
+    
+    public int countCTG(String dna)
+    {
+        int count = 0;
+        int currIndex = dna.indexOf("CTG");
+        while (currIndex != -1) {
+            count++;
+            currIndex = dna.indexOf("CTG", currIndex + 3);
+        }
+        return count;
     }
     
     // Processes a list of genes
@@ -102,7 +114,8 @@ public class Part3
     // Test method
     public void testProcessGenes()
     {
-        FileResource fr = new FileResource("brca1line.fa");
+        //FileResource fr = new FileResource("brca1line.fa");
+        FileResource fr = new FileResource("GRch38dnapart.fa");
         //FileResource fr = new FileResource("test1.fa");
         //FileResource fr = new FileResource("test2.fa");
         String dna = fr.asString().toUpperCase();
@@ -111,6 +124,7 @@ public class Part3
         StorageResource sr = getAllGenes(dna);
         System.out.println("");
         processGenes(sr);
+        System.out.println("Total CTG Count: " + countCTG(dna));
     }
     
     public static void main(String[] args) 
